@@ -36,6 +36,7 @@
 		"230485481773596672"
 	],
 	"dependencies": {
+		"apexlegends-api": "^1.0.2",
 		"apextab-api": "^1.0.5",
 		"discord.js": "^12.5.1",
 		"fs": "0.0.1-security",
