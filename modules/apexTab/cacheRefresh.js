@@ -6,7 +6,7 @@ async function asyncForEach (array, callback) {
 	}
 }
 module.exports.interval = ()=>{
-	//setInterval(()=>{
+	setInterval(()=>{
 		setTimeout(async ()=>{
 			var temp = SB.core.store.fetch('apex');
 			var tempAccounts = [];
@@ -18,7 +18,6 @@ module.exports.interval = ()=>{
 					var t_res = await api.fetchUser(i.apexID)
 					if (t_res.error) {
 						throw t_res;
-						return;
 					}
 					if (t_res.data.global == undefined) return;
 					var objectEntries = Object.entries(t_res.data.legends.all);
@@ -44,7 +43,7 @@ module.exports.interval = ()=>{
 									}
 								})
 							} else {
-								// if this is a legend we already have keep the data we have
+								// if this is a legend we already have keep the data we have in store.json
 								allLegends[f[0]] = f[1];
 							}
 						})
@@ -60,9 +59,8 @@ module.exports.interval = ()=>{
 			}
 			if (done) {
 				var dataToPush = {linkedUsers:tempAccounts}
-				console.log("i pushed that",dataToPush)
 				SB.core.store.set('apex',dataToPush)
 			}
 		},1500)
-	//},SB.prefrences.apex.intervalTimeout)
+	},SB.prefrences.apex.intervalTimeout)
 }
