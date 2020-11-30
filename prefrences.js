@@ -44,5 +44,8 @@ module.exports = {
 			location: `${__dirname}/store.json`,
 			cacheTimerInterval: 25000,
 		}
+	},
+	apex: {
+		intervalTimeout: 60000
 	}
 }
