@@ -2,5 +2,13 @@
 	{
 		"label": "example - Module name in manifest.json",
 		"data": "Supported JSON Object Types live here"
+	},
+	{
+		"label": "apex",
+		"data": {
+			"linkedUsers": []
+		},
+		"createdAt": 1606740572,
+		"modifiedAt": 1606744061
 	}
 ]
