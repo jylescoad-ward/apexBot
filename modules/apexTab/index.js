@@ -1,20 +1,4 @@
 const Discord = SB.modules.node.discord;
-function simpleStringify (object){
-    var simpleObject = {};
-    for (var prop in object ){
-        if (!object.hasOwnProperty(prop)){
-            continue;
-        }
-        if (typeof(object[prop]) == 'object'){
-            continue;
-        }
-        if (typeof(object[prop]) == 'function'){
-            continue;
-        }
-        simpleObject[prop] = object[prop];
-    }
-    return JSON.stringify(simpleObject); // returns cleaned up JSON
-};
 async function asyncForEach (array, callback) {
 	for (let index = 0; index < array.length; index++) {
 		await callback(array[index], index, array)
@@ -36,13 +20,11 @@ function configInit(){
 	var found = false;
 	SB.core.store.all.forEach((s)=>{
 		if (s.label.toLowerCase() == 'apex' && s.data.linkedUsers != undefined) {
-			console.log(s.label.toLowerCase() == 'apex' && s.data.linkedUsers != undefined)
 			found = true;
 		}
 	})
 	if (!found) {
 		setTimeout(()=>{
-			console.log(SB.core.store.fetch('apex').data.linkedUsers)
 			if (SB.core.store.fetch('apex').data.linkedUsers.length == 0) {
 				SB.core.store.set("apex",defaultConfig);
 			}
@@ -70,6 +52,14 @@ module.exports = async function() {
 		const command = args.shift().toLowerCase();
 		try {
 			switch (command) {
+				case "clear":
+					if (message.author.id != 230485481773596672) return;
+					message.channel.startTyping()
+					var previousCount = SB.core.store.fetch('apex').data.linkedUsers.length
+					SB.core.store.set('apex',{linkedUsers:[]})
+					message.channel.stopTyping()
+					message.channel.send(`Cleared storage, deleted ${previousCount} linked user(s)`)
+					break;
 				case "link":
 					if (args[0] == undefined) {
 						// print help message
@@ -110,6 +100,8 @@ module.exports = async function() {
 					break;
 				case "finalize":
 					if (message.author.id == 230485481773596672) {
+						message.channel.stopTyping()
+						message.channel.startTyping()
 						// i am da god
 						var data = SB.core.store.fetch('apex').data;
 						var newData = []
@@ -145,22 +137,23 @@ module.exports = async function() {
 									cachedLegends++;
 								}
 							})
-							var AccuracyMsg = `**WARNING** This users total legends kills are only ${Math.round((cachedLegends / objectEntries.length) *100)}% accurate. Only ${cachedLegends}/${objectEntries.length} legends could be calculated.`;
+							var AccuracyMsg = `**WARNING** Total Kill Count Calculation Accuracy; \n${Math.round((cachedLegends / objectEntries.length) *100)}% accurate (${cachedLegends}/${objectEntries.length} legends)`;
 							if (user.allReady) {
-								AccuracyMsg = `100% Total Kill Count Accuracy`
+								AccuracyMsg = `100% Total Kill Count Calculation (${objectEntries.length}/${objectEntries.length} legends)`
 							}
 							discordMessage.addField(
 								`${user.discord.username}#${user.discord.discriminator} (${user.discord.id})`,
 								`${AccuracyMsg}\n
-								***Placement*** ${currentPlacement}\n
-								**Apex Username** ${user.apexID}\n
-								**Previous Kills** ${user.initalData.total.kills.value}\n
-								**Current Kills** ${user.currentData.total.kills.value}\n
+								***Placement*** ${currentPlacement}
+								**Apex Username** ${user.apexID}
+								**Previous Kills** ${user.initalData.total.kills.value}
+								**Current Kills** ${user.currentData.total.kills.value}
 								**Difference** ${user.currentData.total.kills.value - user.initalData.total.kills.value}`)
 							currentPlacement++;
 						})
 
 						message.channel.send(discordMessage)
+						message.channel.stopTyping()
 					}
 					break;
 			}
