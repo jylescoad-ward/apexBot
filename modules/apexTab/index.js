@@ -36,11 +36,17 @@ function configInit(){
 	var found = false;
 	SB.core.store.all.forEach((s)=>{
 		if (s.label.toLowerCase() == 'apex' && s.data.linkedUsers != undefined) {
+			console.log(s.label.toLowerCase() == 'apex' && s.data.linkedUsers != undefined)
 			found = true;
 		}
 	})
 	if (!found) {
-		SB.core.store.set("apex",defaultConfig);
+		setTimeout(()=>{
+			console.log(SB.core.store.fetch('apex').data.linkedUsers)
+			if (SB.core.store.fetch('apex').data.linkedUsers.length == 0) {
+				SB.core.store.set("apex",defaultConfig);
+			}
+		},500)
 	}
 }
 
@@ -49,7 +55,12 @@ module.exports = async function() {
 	var t_api = require("apexlegends-api")
 	const apexAPI = new t_api(SB.token.apex)
 	SB.client.on('ready',()=>{
-		configInit();
+		try {
+			configInit();
+			require("./cacheRefresh.js").interval()
+		} catch (e) {
+			console.error(e);
+		}
 	})
 
 	SB.client.on('message', async message => {
@@ -57,7 +68,7 @@ module.exports = async function() {
 		if (message.content.indexOf(prefix) !== 0) return;
 		var args = message.content.slice(prefix.length).trim().split(/ +/g);
 		const command = args.shift().toLowerCase();
-
+		try {
 			switch (command) {
 				case "link":
 					if (args[0] == undefined) {
@@ -67,7 +78,6 @@ module.exports = async function() {
 					}
 					var found = false;
 					var store = await SB.core.store.fetch('apex');
-					console.log(store)
 					store.data.linkedUsers.forEach((u)=>{
 						if (u.discord.id == message.author.id) {
 							// found, account linked already
@@ -81,10 +91,11 @@ module.exports = async function() {
 						var t_apex = await apexAPI.fetchUser(args[0]);
 						if (t_apex.error) {
 							// Error
+
+							message.reply("An error happened. <@230485481773596672>")
 						}
 
 						var t_apexlinked = [];
-						console.log('dastore',store)
 						store.data.linkedUsers.forEach(u => t_apexlinked.push(u))
 
 						t_apexlinked.push({
@@ -115,7 +126,6 @@ module.exports = async function() {
 							var t_user = await apexAPI.fetchUser(user.apexID)
 							if (t_user.error) {
 								message.channel.send("An error occoured. Check console :heart:. <@230485481773596672>")
-								console.log(t_user.data);
 								process.exit(1)
 							}
 							user.currentData = t_user.data;
@@ -128,8 +138,25 @@ module.exports = async function() {
 
 						var currentPlacement = 1;
 						newData.forEach(async(user)=>{
-							console.log(user)
-							discordMessage.addField(`${user.discord.username}#${user.discord.discriminator} (${user.discord.id})`,`***Placement*** ${currentPlacement}\r\n**Apex Username** ${user.apexID}\r\n**Previous Kills** ${user.initalData.total.kills.value}\r\n**Current Kills** ${user.currentData.total.kills.value}\r\n**Difference** ${user.currentData.total.kills.value - user.initalData.total.kills.value}`)
+							var objectEntries = Object.entries(user.currentData.legends.all)
+							var cachedLegends = 0;
+							objectEntries.forEach((entry)=>{
+								if (entry[1].data != undefined) {
+									cachedLegends++;
+								}
+							})
+							var AccuracyMsg = `**WARNING** This users total legends kills are only ${Math.round((cachedLegends / objectEntries.length) *100)}% accurate. Only ${cachedLegends}/${objectEntries.length} legends could be calculated.`;
+							if (user.allReady) {
+								AccuracyMsg = `100% Total Kill Count Accuracy`
+							}
+							discordMessage.addField(
+								`${user.discord.username}#${user.discord.discriminator} (${user.discord.id})`,
+								`${AccuracyMsg}\n
+								***Placement*** ${currentPlacement}\n
+								**Apex Username** ${user.apexID}\n
+								**Previous Kills** ${user.initalData.total.kills.value}\n
+								**Current Kills** ${user.currentData.total.kills.value}\n
+								**Difference** ${user.currentData.total.kills.value - user.initalData.total.kills.value}`)
 							currentPlacement++;
 						})
 
@@ -137,7 +164,9 @@ module.exports = async function() {
 					}
 					break;
 			}
-		
+		} catch(e) {
+			console.error(e);
+		}
 
 	})
 
