@@ -42,7 +42,7 @@ module.exports = {
 		},
 		storage: {
 			location: `${__dirname}/store.json`,
-			cacheTimerInterval: 2000,
+			cacheTimerInterval: 25000,
 		}
 	}
 }
