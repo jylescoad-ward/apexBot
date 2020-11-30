@@ -1,0 +1,49 @@
+{
+	"name": "base",
+	"license": "GPL-3.0-or-later",
+	"version": "0.0.6",
+	"branch": "stable",
+	"description": "An Open Source General Purpose Discord Bot written in Node.JS",
+	"build": {
+		"number": 47,
+		"date": "2020_10_30",
+		"timestamp": 1606732662
+	},
+	"main": "index.js",
+	"scripts": {
+		"start": "node .",
+		"debug": "node . --debug",
+		"build": "node . --buildMode"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/discordseedbot/base.git"
+	},
+	"bugs": {
+		"url": "https://github.com/discordseedbot/base/issues"
+	},
+	"homepage": "https://seedbot.xyz",
+	"author": "SeedBot Contributers [seedbot@cock.li]",
+	"contributors": [
+		{
+			"name": "Jyles Coad-Ward",
+			"contact": "jyles@dariox.club",
+			"homepage": "https://jyles.club",
+			"position": "Maintainer/Owner"
+		}
+	],
+	"ownerID": [
+		"230485481773596672"
+	],
+	"dependencies": {
+		"apextab-api": "^1.0.5",
+		"discord.js": "^12.5.1",
+		"fs": "0.0.1-security",
+		"http": "0.0.1-security",
+		"https": "^1.0.0",
+		"inquirer": "^7.2.0",
+		"load-json-file": "^6.2.0",
+		"path": "^0.12.7",
+		"signale": "^1.4.0"
+	}
+}

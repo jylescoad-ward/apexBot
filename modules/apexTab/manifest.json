@@ -1,0 +1,7 @@
+{
+	"name": "apex",
+	"version": "1",
+	"author": "Jyles Coad-Ward [jyles@dariox.club]",
+	"type": "botmod",
+	"main": "index.js"
+}
