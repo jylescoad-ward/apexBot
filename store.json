@@ -6,9 +6,245 @@
 	{
 		"label": "apex",
 		"data": {
-			"linkedUsers": []
+			"linkedUsers": [
+				{
+					"discord": {
+						"id": "230485481773596672",
+						"system": null,
+						"locale": null,
+						"flags": 768,
+						"username": "seed",
+						"bot": false,
+						"discriminator": "0001",
+						"avatar": "16de4d4cca70c4399944b4dc1f263446",
+						"lastMessageChannelID": "715887123378470962",
+						"createdTimestamp": 1475022421068,
+						"defaultAvatarURL": "https://cdn.discordapp.com/embed/avatars/1.png",
+						"tag": "seed#0001",
+						"avatarURL": "https://cdn.discordapp.com/avatars/230485481773596672/16de4d4cca70c4399944b4dc1f263446.webp",
+						"displayAvatarURL": "https://cdn.discordapp.com/avatars/230485481773596672/16de4d4cca70c4399944b4dc1f263446.webp"
+					},
+					"apexID": "basedonwut",
+					"initalData": {
+						"global": {
+							"name": "based",
+							"uid": 1006188385835,
+							"avatar": "https://secure.download.dm.origin.com/production/avatar/prod/userAvatar/32297923/416x416.PNG",
+							"platform": "PC",
+							"level": 155,
+							"toNextLevelPercent": 83,
+							"internalUpdateCount": 4021,
+							"bans": {
+								"isActive": false,
+								"remainingSeconds": 0,
+								"last_banReason": "NONE"
+							},
+							"rank": {
+								"rankScore": 90,
+								"rankName": "Bronze",
+								"rankDiv": 4,
+								"ladderPos": -1,
+								"rankImg": "https://api.mozambiquehe.re/assets/ranks/bronze4.png",
+								"rankedSeason": "period07_split_1"
+							},
+							"battlepass": {
+								"level": "44",
+								"history": {
+									"season1": -1,
+									"season2": -1,
+									"season3": -1,
+									"season4": -1,
+									"season5": -1,
+									"season6": -1,
+									"season7": 44
+								}
+							}
+						},
+						"realtime": {
+							"lobbyState": "open",
+							"isOnline": 0,
+							"isInGame": 0,
+							"canJoin": 0,
+							"partyFull": 0,
+							"selectedLegend": "Lifeline"
+						},
+						"legends": {
+							"selected": {
+								"LegendName": "Lifeline",
+								"data": [],
+								"ImgAssets": {
+									"icon": "https://api.mozambiquehe.re/assets/icons/lifeline.png",
+									"banner": "https://api.mozambiquehe.re/assets/banners/lifeline.jpg"
+								}
+							},
+							"all": {
+								"Bangalore": {
+									"data": [
+										{
+											"name": "Kills",
+											"value": 48,
+											"key": "kills"
+										},
+										{
+											"name": "Double time distance",
+											"value": 7189,
+											"key": "double_time_distance"
+										},
+										{
+											"name": "Enemies hit with smoke grenade",
+											"value": 20,
+											"key": "smoke_grenade_enemies_hit"
+										}
+									],
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/bangalore.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/bangalore.jpg"
+									}
+								},
+								"Bloodhound": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/bloodhound.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/bloodhound.jpg"
+									}
+								},
+								"Lifeline": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/lifeline.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/lifeline.jpg"
+									}
+								},
+								"Caustic": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/caustic.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/caustic.jpg"
+									}
+								},
+								"Gibraltar": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/gibraltar.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/gibraltar.jpg"
+									}
+								},
+								"Mirage": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/mirage.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/mirage.jpg"
+									}
+								},
+								"Pathfinder": {
+									"data": [
+										{
+											"name": "Kills",
+											"value": 195,
+											"key": "kills"
+										},
+										{
+											"name": "Grapple travel distance",
+											"value": 1778880,
+											"key": "grapple_travel_distance"
+										},
+										{
+											"name": "Season 4 Wins",
+											"value": 6,
+											"key": "wins_season_4"
+										}
+									],
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/pathfinder.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/pathfinder.jpg"
+									}
+								},
+								"Wraith": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/wraith.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/wraith.jpg"
+									}
+								},
+								"Octane": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/octane.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/octane.jpg"
+									}
+								},
+								"Wattson": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/wattson.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/wattson.jpg"
+									}
+								},
+								"Crypto": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/crypto.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/crypto.jpg"
+									}
+								},
+								"Revenant": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/revenant.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/revenant.jpg"
+									}
+								},
+								"Loba": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/loba.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/loba.jpg"
+									}
+								},
+								"Rampart": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/rampart.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/rampart.jpg"
+									}
+								},
+								"Horizon": {
+									"ImgAssets": {
+										"icon": "https://api.mozambiquehe.re/assets/icons/horizon.png",
+										"banner": "https://api.mozambiquehe.re/assets/banners/horizon.jpg"
+									}
+								}
+							}
+						},
+						"mozambiquehere_internal": {
+							"isNewToDB": false,
+							"claimedBy": "-1",
+							"APIAccessType": "BASIC",
+							"ClusterID": "10",
+							"rate_limit": {
+								"max_per_second": 3,
+								"current_req": "1"
+							}
+						},
+						"total": {
+							"kills": {
+								"name": "Kills",
+								"value": 243
+							},
+							"double_time_distance": {
+								"name": "Double time distance",
+								"value": 7189
+							},
+							"smoke_grenade_enemies_hit": {
+								"name": "Enemies hit with smoke grenade",
+								"value": 20
+							},
+							"grapple_travel_distance": {
+								"name": "Grapple travel distance",
+								"value": 1778880
+							},
+							"wins_season_4": {
+								"name": "Season 4 Wins",
+								"value": 6
+							},
+							"kd": {
+								"value": -1,
+								"name": "KD"
+							}
+						}
+					}
+				}
+			]
 		},
 		"createdAt": 1606740572,
-		"modifiedAt": 1606744061
+		"modifiedAt": 1606756661
 	}
 ]
