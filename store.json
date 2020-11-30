@@ -10,7 +10,7 @@
 				{
 					"discord": {
 						"id": "230485481773596672",
-						"system": null,
+						"system": false,
 						"locale": null,
 						"flags": 768,
 						"username": "seed",
@@ -245,6 +245,6 @@
 			]
 		},
 		"createdAt": 1606740572,
-		"modifiedAt": 1606756661
+		"modifiedAt": 1606759505
 	}
 ]
