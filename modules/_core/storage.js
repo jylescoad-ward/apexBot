@@ -24,18 +24,22 @@ module.exports.timer = ()=>{
 	})
 }
 module.exports.fetch = (g_label) => {
-	if (g_label == undefined) {
-		throw "Label undefined";
-	}
-
-	var tempStore = JSON.parse(fs.readFileSync(SB.prefrences.core.storage.location))
-	var thingToReturn = {};
-	tempStore.forEach((e)=>{
-		if (e.label.toLowerCase() == g_label.toLowerCase()){
-			thingToReturn = e;
+	try {
+		if (g_label == undefined) {
+			throw "Label undefined";
 		}
-	})
-	return thingToReturn
+	
+		var tempStore = JSON.parse(fs.readFileSync(SB.prefrences.core.storage.location))
+		var thingToReturn = {};
+		tempStore.forEach((e)=>{
+			if (e.label.toLowerCase() == g_label.toLowerCase()){
+				thingToReturn = e;
+			}
+		})
+		return thingToReturn
+	} catch(e) {
+		console.error(e);
+	}
 }
 module.exports.set = (g_label,g_data) => {
 	if (g_label == undefined) {
