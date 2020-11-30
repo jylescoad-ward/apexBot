@@ -17,12 +17,26 @@ module.exports.startup = ()=>{
 module.exports.timer = ()=>{
 	SB.client.on('ready',()=>{
 		SB.con.info(`[core.storage => timer] Storage Cache Timer Loop Created`);
+		SB.core.store.all = JSON.parse(fs.readFileSync(SB.prefrences.core.storage.location))
 		setInterval(()=>{
 			SB.core.store.all = JSON.parse(fs.readFileSync(SB.prefrences.core.storage.location))
 		},SB.prefrences.core.storage.cacheTimerInterval)
 	})
 }
+module.exports.fetch = (g_label) => {
+	if (g_label == undefined) {
+		throw "Label undefined";
+	}
 
+	var tempStore = JSON.parse(fs.readFileSync(SB.prefrences.core.storage.location))
+	var thingToReturn = {};
+	tempStore.forEach((e)=>{
+		if (e.label.toLowerCase() == g_label.toLowerCase()){
+			thingToReturn = e;
+		}
+	})
+	return thingToReturn
+}
 module.exports.set = (g_label,g_data) => {
 	if (g_label == undefined) {
 		throw error("Label undefined.");

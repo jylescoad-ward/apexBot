@@ -10,7 +10,7 @@ var returnJSON={};
 module.exports = ()=>{
 	
 	// Check if the user wants enviroment variables
-	if (process.env._.indexOf("SB_enviromentTokens") !== -1 && process.env._.indexOf("SB_enviromentTokens").toLowerCase() === "yes") {
+	if (process.env["SB_enviromentTokens"] != undefined && process.env["SB_enviromentTokens"].toLowerCase() === "yes") {
 		global.SB.token = {
 			"discord": process.env.SBToken_DISCORD,
 			"youtube": process.env.SBToken_YOUTUBE,
