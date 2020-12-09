@@ -15,10 +15,17 @@ class queue {
 		*/
 		this.UID = UIDGen(8);
 		this.threads = config.threads;
+		this.items = [];
 
 		return this.UID;
 	}
 	add (callBack) {
 		// Add this callback to the queue
+		this.items.push(callBack);
+	}
+	start(callBack) {
+		// start the queue.
+		console.debug(`[cacheQueue] Found '${this.queue.length}' queued items.`);
+		
 	}
 }
