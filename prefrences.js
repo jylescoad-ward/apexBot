@@ -46,6 +46,6 @@ module.exports = {
 		}
 	},
 	apex: {
-		intervalTimeout: 600
+		intervalTimeout: 120
 	}
 }
