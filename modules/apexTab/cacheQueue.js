@@ -1,5 +1,3 @@
-const { Message } = require("discord.js");
-
 class queue {
 	_UIDGen(length) {
 			var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -9,21 +7,29 @@ class queue {
 			}
 			return retVal;
 	}
+	_log(content) {
+		if (this.storage.logging) {
+			console.debug(content)
+		}
+	}
 	_message(messageGiven) {
-		this.storage.messages.push({timestamp:Date.now(),message:messageGiven});
-		this.storage.currentMessage = {timestamp:Date.now(),message:messageGiven};
-		return;
+		var shitToPush = {timestamp:Date.now(),message:messageGiven}
+		this.storage.messages.push(shitToPush);
+		this.storage.currentMessage = shitToPush;
 	}
 	constructor(config) {
+		if (config == undefined) {
+			var config = {};
+		}
 		this.storage = {
 			UID: this._UIDGen(8),
 			threads: config.threads || 1,
+			logging: config.log || false,
 			items: [],
 			messages: [],
 			currentMessage: 'IDLE'
 		}
 		this._message(`QUEUE_NEW-${this.storage.UID}`);
-		return this.storage;
 	}
 	add (callBack) {
 		// Add this callback to the queue
@@ -32,7 +38,7 @@ class queue {
 	}
 	clear (callBack) {
 		this.storage.items = [];
-		console.debug(`[cacheQueue] Cleared queue.`);
+		this._log(`[cacheQueue] Cleared queue.`);
 		this._message(`QUEUE_CLEAR`);
 		callBack(this.storage);
 	}
@@ -43,7 +49,6 @@ class queue {
 			throw "No items were queued";
 		}
 		this.storage.queueStart = Date.now()
-		console.debug(`[cacheQueue] Found '${this.storage.items.length}' queued items.`);
 		this._message(`QUEUE_RUN-START`)
 		for (const obj of this.storage.items) {
 			await obj();
@@ -51,9 +56,9 @@ class queue {
 		}
 		this._message(`QUEUE_RUN-END`);
 		this._message(`IDLE`);
-		console.debug(`[cacheQueue] Completed '${this.storage.items.length}' tasks.`);
 		this.storage.queueEnd = Date.now()
 		this.storage.queueDuration = this.storage.queueEnd - this.storage.queueStart;
+		this._log(`[cacheQueue] Completed '${this.storage.items.length}' tasks in ${(this.storage.queueDuration/1000).toFixed(2)}s`);
 		if (callBack != undefined) {
 			callBack(this)
 		} else {
@@ -61,3 +66,5 @@ class queue {
 		}
 	}
 }
+
+module.exports = queue;
