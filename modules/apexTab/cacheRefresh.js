@@ -16,7 +16,7 @@ module.exports.all = () => {
 			queue.start(()=>{
 				loopFunction();
 			});
-		},SB.prefrences.apex.intervalTimeout)
+		},SB.prefrences.apex.intervalTimeout*1000)
 	}
 	loopFunction();
 }
