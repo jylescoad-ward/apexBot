@@ -38,8 +38,9 @@ module.exports = async function() {
 	const apexAPI = new t_api(SB.token.apex)
 	SB.client.on('ready',()=>{
 		try {
+			var cacheRefresh = require("./cacheRefresh")
 			configInit();
-			require("./cacheRefresh.js").interval()
+			cacheRefresh.all()
 		} catch (e) {
 			console.error(e);
 		}
