@@ -9,7 +9,7 @@ class queue {
 	}
 	_log(content) {
 		if (this.storage.logging) {
-			console.debug(content)
+			console.debug(`[${this.storage.UID}] ${content}`)
 		}
 	}
 	_message(messageGiven) {
