@@ -1,6 +1,7 @@
 module.exports = {
 	prefix: {
 		default: "=",
+		dev: "--"
 	},
 	core: {
 		stats: {
@@ -10,10 +11,10 @@ module.exports = {
 		tokenManager: {
 			enviromentVariable: false,
 			location: "aboveRoot",
-			filename: "token",
+			filename: "apexbot",
 			debug: {
 				location: "aboveRoot",
-				filename: "canary",
+				filename: "apexbot",
 			}
 		},
 		developerAlerts: {
@@ -46,6 +47,6 @@ module.exports = {
 		}
 	},
 	apex: {
-		intervalTimeout: 120
+		intervalTimeout: 15
 	}
 }

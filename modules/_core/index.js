@@ -33,5 +33,5 @@ mex.isError = function(e){
 }
 
 mex.notification = require("./developerAlerts.js");
-
+console.debug(mex)
 module.exports = mex;

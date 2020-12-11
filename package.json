@@ -12,8 +12,9 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node .",
-		"debug": "node . --debug",
-		"build": "node . --buildMode"
+		"debug": "node . --inspect --debug",
+		"build": "node . --inspect --buildMode",
+		"inspect": "node inspect . --debug"
 	},
 	"repository": {
 		"type": "git",
@@ -44,6 +45,7 @@
 		"https": "^1.0.0",
 		"inquirer": "^7.2.0",
 		"load-json-file": "^6.2.0",
+		"node-inspect": "^2.0.0",
 		"path": "^0.12.7",
 		"signale": "^1.4.0"
 	}

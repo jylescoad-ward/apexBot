@@ -6,24 +6,30 @@ function msgGen(embed,content,title,message) {
 	.setColor(Math.floor(Math.random()*16777215).toString(16))
 	.setTimestamp()
 	.setTitle(title)
-	.setFooter(message.content)
-	.addField("Message Info",
-	`***User Snowflake:*** ${message.author.id}\n
-	***User:*** <@${message.author.id}>
-	***Guild Name:*** ${message.guild.name}\n
-	***Guild Snowflake:*** ${message.guild.id}\n
-	***Channel Name:*** ${message.channel.name}\n
-	***Channel Snowflake:*** ${message.channel.id}`)
-	.setAuthor(message.author.username,message.author.avatarURL())
+	if (message != undefined) {
+		tEmbed.setFooter(message.content)
+		tEmbed.addField("Message Info",
+		`***User Snowflake:*** ${message.author.id}\n
+		***User:*** <@${message.author.id}>
+		***Guild Name:*** ${message.guild.name}\n
+		***Guild Snowflake:*** ${message.guild.id}\n
+		***Channel Name:*** ${message.channel.name}\n
+		***Channel Snowflake:*** ${message.channel.id}`)
+		.setAuthor(message.author.username,message.author.avatarURL())
+	}
 	if (content == null) return tEmbed;
-	embed.setDescription(content)
+	if (content.stack == undefined) {
+		embed.setDescription(content)
+	} else {
+		embed.setDescription(content.stack)
+	}
 	return tEmbed;
 }
 
 var pref = SB.prefrences.core.developerAlerts
 
 function errGen(err,type,message) {
-	var tempMsg = new Discord.RichEmbed()
+	var tempMsg = new Discord.MessageEmbed()
 	var title = "Generic Error";
 	var channelID = pref.default.error
 	switch(type.toLowerCase) {
@@ -40,7 +46,10 @@ function errGen(err,type,message) {
 	}
 	msgGen(tempMsg,err,title,message)
 	SB.client.channels.cache.get(channelID).send(tempMsg);
-	message.channel.send("An error has occoured, a error report has been filed to the developers.")
+	if (message != undefined) {
+		message.channel.send("An error has occoured, a error report has been filed to the developers.")
+	}
+	console.error(err);
 	return;
 }
 function genNotif(content,type) {
@@ -74,7 +83,7 @@ module.exports = (content,type,message)=>{
 		genNotif(content,type)
 	}
 }
-
+module.exports.error = errGen;
 module.exports.startup = async ()=>{
 	var interval = setInterval(clientCheck,500)
 	function clientCheck(){
@@ -108,7 +117,7 @@ module.exports.alert = (error,type)=>{
 			break;
 	}
 
-	var content = new Discord.RichEmbed()
+	var content = new Discord.MessageEmbed()
 		.setTitle(title)
 		.setDescription(error)
 		.setTimestamp()

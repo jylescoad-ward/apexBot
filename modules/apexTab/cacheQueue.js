@@ -29,6 +29,9 @@ class queue {
 			messages: [],
 			currentMessage: 'IDLE'
 		}
+		if (SB.parameters.debugMode) {
+			this.storage.logging = true;
+		}
 		this._message(`QUEUE_NEW-${this.storage.UID}`);
 	}
 	add (callBack) {
