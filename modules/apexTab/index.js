@@ -25,7 +25,7 @@ function configInit(){
 	})
 	if (!found) {
 		setTimeout(()=>{
-			if (SB.core.store.fetch('apex').data.linkedUsers.length == 0) {
+			if (SB.core.store.fetch('apex').data.timeline == undefined || SB.core.store.fetch('apex').data.linkedUsers.length == 0) {
 				SB.core.store.set("apex",defaultConfig);
 			}
 		},500)
@@ -41,7 +41,7 @@ module.exports = async function() {
 		try {
 
 			var cacheRefresh = require("./cacheRefresh")
-			configInit();
+			//configInit();
 			cacheRefresh.all()
 		} catch (e) {
 			console.error(e);
@@ -72,14 +72,6 @@ module.exports = async function() {
 					}
 					var found = false;
 					var store = await SB.core.store.fetch('apex');
-					/*store.data.linkedUsers.forEach((u)=>{
-						if (u.discord.id == message.author.id) {
-							// found, account linked already
-							message.reply("User Already Linked, Ping <@230485481773596672> for help.");
-							found = true
-							return;
-						}
-					})*/
 					var lauth = message.author;
 					if (args[1] != undefined) {
 						lauth =  message.mentions.users.first() || SB.client.users.cache.get(args[1]);
@@ -96,14 +88,17 @@ module.exports = async function() {
 						}
 
 						var t_apexlinked = [];
+						if (store.data.linkedUsers == undefined) {
+							store.data.linkedUSers = [];
+						}
 						store.data.linkedUsers.forEach(u => t_apexlinked.push(u))
 
 						t_apexlinked.push({
-							discord:lauth,
+							discord: lauth,
 							apexID: args[0],
-							initalData: t_apex.data
+							data: t_apex.data
 						})
-						SB.core.store.set('apex',{linkedUsers: t_apexlinked})
+						SB.core.store.set('apex',{timestamp: Date.now()/1000, linkedUsers: t_apexlinked})
 						message.channel.send(`Linked User ${args[0]} to Discord "${lauth.username}#${lauth.discriminator}" with the snowflake of ${lauth.id}`)
 						return;
 					}

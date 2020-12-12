@@ -31,7 +31,8 @@ module.exports.all = () => {
 module.exports.refreshRemoteCache = async () => {
 	var temp = SB.core.store.fetch('apex');
 	var queue = new customQueue();
-	await asyncForEach(temp.data.linkedUsers,(user)=>{
+	console.debug(temp)
+	await asyncForEach(temp.data.data.linkedUsers,(user)=>{
 		var functionToPush = async () => {
 			try {
 				var temp = require("apexlegends-api");
@@ -50,7 +51,43 @@ module.exports.refreshRemoteCache = async () => {
 	await queue.start();
 	return;
 }
-module.exports.killUpdate = ()=>{
+module.exports.killUpdate = async ()=>{
+	var temp = SB.core.store.fetch('apex');
+	var tempAccounts = [];
+	var queue = new customQueue();
+	await asyncForEach(temp.data.data.linkedUsers,(i)=>{
+		queue.add(async ()=>{
+			var t_res = await api.fetchUser(i.apexID)
+			if (t_res.error) {
+				console.error("FUCKING HELL MATE",t_res,i)
+			} else {
+				if (t_res.data.global == undefined) {
+					console.error("Aparantly the global var does not exist, WTF?",t_res)
+				}else{
+					i.data = t_res.data;
+					tempAccounts.push(i);
+					console.log("Processed user",i)
+				}
+			}
+		})
+	})
+	await queue.start(()=>{
+		var newData = temp.data.data.timeline || [];
+		newData.push({
+			timestamp: Date.now()/1000,
+			linkedUsers: tempAccounts
+		})
+		var dataToPush = {
+			data: {
+				timeline: newData,
+				linkedUsers: temp.data.data.linkedUsers
+			}
+		}
+		console.debug(`Pushing Data to Storage`,dataToPush)
+		SB.core.store.set('apex',dataToPush)
+	});
+}
+module.exports.killUpdate_old = ()=>{
 	setTimeout(async ()=>{
 		var temp = SB.core.store.fetch('apex');
 		var tempAccounts = [];
@@ -74,10 +111,8 @@ module.exports.killUpdate = ()=>{
 								entiresIndex++;
 							}
 						})
-						i.allReady = false;
 						if (entiresIndex == entiresLength) {
 							// yo they actually selected all legends, a gold star for you!
-							i.allReady = true;
 						} else {
 							var allLegends = {};
 							Object.entries(i.initalData.legends.all).forEach((f)=>{
@@ -109,7 +144,10 @@ module.exports.killUpdate = ()=>{
 			done = true
 		}
 		if (done) {
-			var dataToPush = {linkedUsers:tempAccounts}
+			var dataToPush = {
+				timestamp: Date.now()/1000,
+				linkedUsers: tempAccounts
+			}
 			SB.core.store.set('apex',dataToPush)
 		}
 	},1500)
