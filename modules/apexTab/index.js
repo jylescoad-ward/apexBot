@@ -64,7 +64,7 @@ module.exports = async function() {
 					message.channel.send(`Cleared storage, deleted ${previousCount} linked user(s)`)
 					break;
 				case "link":
-					if (message.author.id != 230485481773596672) return;
+					if (SB.prefrences.core.admins.find(u => u == message.author.id.toString()) == undefined) return;
 					if (args[0] == undefined) {
 						// print help message
 						message.reply(`No username was given, try adding your OriginID at the end of the command, Try doing '=link <OriginID Here>'. For more help ping <@230485481773596672>`)
