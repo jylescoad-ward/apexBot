@@ -2,36 +2,44 @@ const apexAPI = require("apexlegends-api")
 var api = new apexAPI(SB.token.apex);
 var customQueue = require("./cacheQueue");
 async function asyncForEach (array, callback) {
-	for (let index = 0; index < array.length; index++) {
-		await callback(array[index], index, array)
+	try {
+		for (let index = 0; index < array.length; index++) {
+			await callback(array[index], index, array)
+		}
+	} catch(e) {
+		console.error(e);
 	}
 }
 
 module.exports.all = () => {
 	var queue = new customQueue({log:false});
-	queue.add(module.exports.refreshRemoteCache)
-	queue.add(module.exports.killUpdate)
-	var loopFunction = async () => {
-		try {
-			var loopTimeout = setTimeout(()=>{
-				queue.start(()=>{
-					loopFunction();
-				});
-			},SB.prefrences.apex.intervalTimeout*1000)
-		} catch (err) {
-			if (SB.core.notification != undefined) {
-				SB.core.notification.error(err,'dev')
+	try {
+		queue.add(module.exports.refreshRemoteCache)
+		queue.add(module.exports.killUpdate)
+		var loopFunction = async () => {
+			try {
+				var loopTimeout = setTimeout(()=>{
+					queue.start(()=>{
+						loopFunction().catch(console.error);
+					});
+				},SB.prefrences.apex.intervalTimeout*1000)
+			} catch (err) {
+				console.error(err);
+				if (SB.core.notification != undefined) {
+					SB.core.notification.error(err,'dev')
+				}
+				loopFunction();
 			}
-			loopFunction();
 		}
+		loopFunction();
+	} catch(e) {
+		console.error(e);
 	}
-	loopFunction();
 }
 
 module.exports.refreshRemoteCache = async () => {
 	var temp = SB.core.store.fetch('apex');
 	var queue = new customQueue();
-	console.debug(temp)
 	await asyncForEach(temp.data.data.linkedUsers,(user)=>{
 		var functionToPush = async () => {
 			try {
@@ -44,17 +52,24 @@ module.exports.refreshRemoteCache = async () => {
 				if (SB.core.notification != undefined) {
 					SB.core.notification.error(err,'dev')
 				}
+				console.error(err);
 			}
 		}
 		queue.add(functionToPush)
 	})
-	await queue.start();
+	try {
+		await queue.start();
+	} catch(e) {
+		console.error(e);
+	}
 	return;
 }
 module.exports.killUpdate = async ()=>{
 	var temp = SB.core.store.fetch('apex');
+	if (temp.data.data.linkedUsers.length < 1) return;
 	var tempAccounts = [];
 	var queue = new customQueue();
+	console.log(temp)
 	await asyncForEach(temp.data.data.linkedUsers,(i)=>{
 		queue.add(async ()=>{
 			var t_res = await api.fetchUser(i.apexID)

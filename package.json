@@ -12,7 +12,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node .",
-		"debug": "node . --inspect --debug",
+		"debug": "node . --debug",
 		"build": "node . --inspect --buildMode",
 		"inspect": "node inspect . --debug"
 	},
@@ -39,7 +39,7 @@
 	"dependencies": {
 		"apexlegends-api": "^1.0.2",
 		"apextab-api": "^1.0.5",
-		"discord.js": "^12.5.3",
+		"discord.js": "^12.5.1",
 		"fs": "0.0.1-security",
 		"http": "0.0.1-security",
 		"https": "^1.0.0",

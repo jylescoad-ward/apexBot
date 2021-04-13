@@ -11,11 +11,13 @@ module.exports = {
 		},
 		tokenManager: {
 			enviromentVariable: false,
-			location: "aboveRoot",
-			filename: "apexbot",
+			location: "/mnt/c/Work/development/apexBot/token.json",
+			tokenLocation: "/mnt/c/Work/development/apexBot/token.json",
+			filename: "token",
 			debug: {
-				location: "aboveRoot",
-				filename: "apexbot",
+				location: "/mnt/c/Work/development/apexBot/token.json",
+				tokenLocation: "/mnt/c/Work/development/apexBot/token.json",
+				filename: "token",
 			}
 		},
 		developerAlerts: {
@@ -48,6 +50,6 @@ module.exports = {
 		}
 	},
 	apex: {
-		intervalTimeout: 15
+		intervalTimeout: 30
 	}
 }

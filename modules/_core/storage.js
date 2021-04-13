@@ -11,7 +11,12 @@ module.exports.startup = ()=>{
 	}
 	var tempStore = require(SB.prefrences.core.storage.location);
 	SB.con.info(`[core.storage] Detected ${tempStore.length} storage object(s)`);
-	module.exports.timer();
+	try {
+		module.exports.timer();
+	} catch(e) {
+		console.error(e);
+		process.exit(1);
+	}
 }
 
 module.exports.timer = ()=>{

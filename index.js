@@ -291,10 +291,20 @@ setTimeout(()=>{
 	});
 	SB.modules.bot.forEach(async (m) => {
 		SB.con.module.bot.attemptLoad(`${m.name}@${require("./"+m.location+"/manifest.json").version}`)
-		m.f();
+		try {
+			m.f();
+		} catch(e) {
+			console.log(e);
+			process.exit(1);
+		}
 	});
 	SB.modules.generic.forEach(async (m) => {
 		SB.con.module.attemptLoad(`${m.name}@${require("./"+m.location+"/manifest.json").version}`);
-		m.f();
+		try {
+			m.f();
+		} catch(e) {
+			console.log(e);
+			process.exit(1);
+		}
 	});
 },2000)

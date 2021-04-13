@@ -6,6 +6,7 @@ async function asyncForEach (array, callback) {
 }
 function configInit(){
 	var defaultConfig = {
+		timeline: [],
 		linkedUsers: [
 			/*
 			{
@@ -58,8 +59,12 @@ module.exports = async function() {
 				case "clear":
 					if (SB.prefrences.core.admins.find(u => u == message.author.id.toString()) == undefined) return;
 					message.channel.startTyping()
-					var previousCount = SB.core.store.fetch('apex').data.linkedUsers.length
-					SB.core.store.set('apex',{linkedUsers:[]})
+					var previousCount = 0;
+					console.log(SB.core.store.fetch('apex').data);
+					if (SB.core.store.fetch('apex').data.linkedUsers != undefined) {
+							previousCount = SB.core.store.fetch('apex').data.linkedUsers.length;
+					}
+					SB.core.store.set('apex',{data:{linkedUsers:[],timeline:[]}});
 					message.channel.stopTyping()
 					message.channel.send(`Cleared storage, deleted ${previousCount} linked user(s)`)
 					break;
@@ -71,7 +76,7 @@ module.exports = async function() {
 						return;
 					}
 					var found = false;
-					var store = await SB.core.store.fetch('apex');
+					var store = await SB.core.store.fetch('apex').data;
 					var lauth = message.author;
 					if (args[1] != undefined) {
 						lauth =  message.mentions.users.first() || SB.client.users.cache.get(args[1]);
@@ -98,7 +103,8 @@ module.exports = async function() {
 							apexID: args[0],
 							data: t_apex.data
 						})
-						SB.core.store.set('apex',{timestamp: Date.now()/1000, linkedUsers: t_apexlinked})
+						console.log(t_apexlinked);
+						SB.core.store.set('apex',{data:{timestamp: Date.now()/1000, linkedUsers: t_apexlinked, timeline: store.data.timeline}});
 						message.channel.send(`Linked User ${args[0]} to Discord "${lauth.username}#${lauth.discriminator}" with the snowflake of ${lauth.id}`)
 						return;
 					}
@@ -117,25 +123,30 @@ module.exports = async function() {
 						message.channel.send("Tournament has started!");
 						break;
 				case "finalize":
+					return;
 					if (SB.prefrences.core.admins.find(u => u == message.author.id.toString()) != undefined) {
 						message.channel.stopTyping()
 						message.channel.startTyping()
 						// i am da god
-						var data = SB.core.store.fetch('apex').data;
+						var data = SB.core.store.fetch('apex').data.data;
 						var newData = []
 						var discordMessage = new Discord.MessageEmbed()
 							.setTitle("All User Results")
 							.setTimestamp()
 							.setFooter(`${data.linkedUsers.length} Attendees Participating`)
 						await asyncForEach(data.linkedUsers,async (t_user)=>{
-							var user = t_user;
-							var t_user = await apexAPI.fetchUser(user.apexID)
-							if (t_user.error) {
-								message.channel.send("An error occoured. Check console :heart:. <@230485481773596672>")
-								process.exit(1)
+							try {
+								var user = t_user;
+								var t_user = await apexAPI.fetchUser(user.apexID)
+								if (t_user.error) {
+									message.channel.send("An error occoured. Check console :heart:. <@230485481773596672>")
+									process.exit(1)
+								}
+								user.currentData = t_user.data;
+								newData.push(user);
+							} catch (e) {
+								console.error(e);
 							}
-							user.currentData = t_user.data;
-							newData.push(user);
 						})
 
 						newData.sort((a,b)=>{
@@ -143,26 +154,32 @@ module.exports = async function() {
 						})
 
 						var currentPlacement = 1;
+						console.log(data);
 						newData.forEach(async(user)=>{
-							var objectEntries = Object.entries(user.currentData.legends.all)
-							var cachedLegends = 0;
-							objectEntries.forEach((entry)=>{
-								if (entry[1].data != undefined) {
-									cachedLegends++;
+							try {
+								var objectEntries = Object.entries(user.currentData.legends.all)
+								var cachedLegends = 0;
+								objectEntries.forEach((entry)=>{
+									if (entry[1].data != undefined) {
+										cachedLegends++;
+									}
+								})
+								console.log(user);
+								var AccuracyMsg = `**WARNING** Total KCC Accuracy; \n${Math.round((cachedLegends / objectEntries.length) *100)}% acc (${cachedLegends}/${objectEntries.length} legends)`;
+								if (user.allReady) {
+									AccuracyMsg = `100% Total KCC (${objectEntries.length}/${objectEntries.length} legends)`
 								}
-							})
-							var AccuracyMsg = `**WARNING** Total KCC Accuracy; \n${Math.round((cachedLegends / objectEntries.length) *100)}% acc (${cachedLegends}/${objectEntries.length} legends)`;
-							if (user.allReady) {
-								AccuracyMsg = `100% Total KCC (${objectEntries.length}/${objectEntries.length} legends)`
+								discordMessage.addField(
+									`${user.discord.username}#${user.discord.discriminator} (${user.discord.id})`,
+									`${AccuracyMsg}\n
+									***Placement*** ${currentPlacement}
+									**Apex Username** ${user.apexID}
+									**Previous Kills** ${user.startData.total.kills.value}
+									**Current Kills** ${user.currentData.total.kills.value}
+									**Difference** ${user.currentData.total.kills.value - user.startData.total.kills.value}`)
+							} catch(e) {
+								console.error(e);
 							}
-							discordMessage.addField(
-								`${user.discord.username}#${user.discord.discriminator} (${user.discord.id})`,
-								`${AccuracyMsg}\n
-								***Placement*** ${currentPlacement}
-								**Apex Username** ${user.apexID}
-								**Previous Kills** ${user.startData.total.kills.value}
-								**Current Kills** ${user.currentData.total.kills.value}
-								**Difference** ${user.currentData.total.kills.value - user.startData.total.kills.value}`)
 							currentPlacement++;
 						})
 
