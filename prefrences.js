@@ -4,6 +4,7 @@ module.exports = {
 		dev: "--"
 	},
 	core: {
+		admins: ["488187472514252811","144690159613378560"],
 		stats: {
 			timer: 600,
 			loginRetryTimer: 1
