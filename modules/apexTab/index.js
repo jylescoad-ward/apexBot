@@ -56,7 +56,7 @@ module.exports = async function() {
 		try {
 			switch (command) {
 				case "clear":
-					if (message.author.id != 230485481773596672) return;
+					if (SB.prefrences.core.admins.find(u => u == message.author.id.toString()) == undefined) return;
 					message.channel.startTyping()
 					var previousCount = SB.core.store.fetch('apex').data.linkedUsers.length
 					SB.core.store.set('apex',{linkedUsers:[]})
@@ -104,7 +104,7 @@ module.exports = async function() {
 					}
 					break;
 				case "start":
-						if (message.author.id != 230485481773596672) return;
+						if (SB.prefrences.core.admins.find(u => u == message.author.id.toString()) == undefined) return;
 						message.channel.starttyping();
 						var apexStorage = await SB.core.store.fetch('apex');
 						var t_linkedUsers = [];
@@ -117,7 +117,7 @@ module.exports = async function() {
 						message.channel.send("Tournament has started!");
 						break;
 				case "finalize":
-					if (message.author.id == 230485481773596672) {
+					if (SB.prefrences.core.admins.find(u => u == message.author.id.toString()) != undefined) {
 						message.channel.stopTyping()
 						message.channel.startTyping()
 						// i am da god
