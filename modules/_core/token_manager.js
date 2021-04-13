@@ -34,10 +34,12 @@ module.exports = ()=>{
 			returnJSON = require(`./../../${fName}`);
 			break;
 		default:
-			if (require("fs").existsSync(SB.prefrences.core.tokenManager.tokenLocation)) {
-				require("fs").readFile(SB.prefrences.core.tokenManager.tokenLocation, (e, d) => {
+			console.log(require("fs").existsSync(loc));
+			if (require("fs").existsSync(loc)) {
+				require("fs").readFile(loc, (e, d) => {
 					if (e) throw e;
 					returnJSON = JSON.parse(d);
+					global.SB.token = JSON.parse(d);
 					console.log(returnJSON)
 				})
 			} else {

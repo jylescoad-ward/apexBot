@@ -69,6 +69,7 @@ function genNotif(content,type) {
 }
 
 module.exports = (content,type,message)=>{
+	return;
 	if (error == undefined) return;
 	var genParam = {
 		message: false,
@@ -85,6 +86,7 @@ module.exports = (content,type,message)=>{
 }
 module.exports.error = errGen;
 module.exports.startup = async ()=>{
+	return;
 	var interval = setInterval(clientCheck,500)
 	function clientCheck(){
 		if (SB.client.on !== undefined) {
@@ -102,6 +104,7 @@ module.exports.startup = async ()=>{
 }
 
 module.exports.alert = (error,type)=>{
+	return;
 	var title = "Generic Alert";
 	var channelID = pref.default.notifications
 	switch (type.toLowerCase()) {
@@ -128,6 +131,7 @@ module.exports.alert = (error,type)=>{
 
 
 module.exports.unauth = (message)=>{
+	return;
 	
 	// Sends in channel telling user that they're not authed.
 	let invalidAuthor = new Discord.MessageEmbed()
@@ -154,14 +158,18 @@ module.exports.unauth = (message)=>{
 
 // Old Module Support
 module.exports.developerError = (message,error)=>{
+	return;
 	module.exports(error,'developer',message)
 }
 module.exports.userspaceError  = (message,error)=>{
+	return;
 	module.exports(error,'user',message)
 }
 module.exports.developerNotif = (content)=>{
+	return;
 	module.exports(content,'developer',message)
 }
 module.exports.userspaceNotif = (content)=>{
+	return;
 	module.exports(content,'user',message)
 }
