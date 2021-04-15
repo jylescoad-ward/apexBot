@@ -112,7 +112,7 @@ module.exports = async function() {
 				case "start":
 						if (SB.prefrences.core.admins.find(u => u == message.author.id.toString()) == undefined) return;
 						message.channel.starttyping();
-						var apexStorage = await SB.core.store.fetch('apex');
+						var apexStorage = await SB.core.store.fetch('apex').data;
 						var t_linkedUsers = [];
 						apexStorage.data.linkedUsers.forEach((u)=>{ t_linkedUsers.push(u) })
 						await asyncForEach(t_linkedUsers,(user)=>{

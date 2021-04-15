@@ -47,6 +47,7 @@
 		"load-json-file": "^6.2.0",
 		"node-inspect": "^2.0.0",
 		"path": "^0.12.7",
-		"signale": "^1.4.0"
+		"signale": "^1.4.0",
+		"tinytoolbox": "0.0.7"
 	}
 }
