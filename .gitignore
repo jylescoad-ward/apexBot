@@ -108,3 +108,5 @@ dist
 .original
 logs/
 .vs/
+/nbproject/private/
+/nbproject/
