@@ -1,0 +1,12 @@
+@import "./TabSelector.css";
+@import "./TabContent.css";
+
+@import "./Tab_Participants.css";
+
+body {
+	background-color: white;
+	font-family: 'Open Sans' sans-serif;
+}
+strong {
+	font-weight: bold;
+}

@@ -1,0 +1,9 @@
+.TabContent.Participants td.Avatar img{
+	width: 120px;
+	border-radius: 60px;
+}
+
+.TabContent.Participants ul.UpdateUserStatus li {
+	text-align: center;
+	margin: 8px 4px;
+}
