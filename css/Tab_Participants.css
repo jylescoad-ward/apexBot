@@ -7,3 +7,14 @@
 	text-align: center;
 	margin: 8px 4px;
 }
+.TabContent.Participants td.Notes {
+	padding: 0;
+	padding: 4px;
+
+	max-height: 140px;
+	max-width: 200px;
+}
+.TabContent.Participants td.Notes textarea {
+	height: 100%;
+	width: 100%;
+}
