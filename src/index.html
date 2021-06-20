@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Apex Tourney</title>
+		<title>Apex Legends Tournament Manager</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<!-- 3rd Party Stylesheets -->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link rel="stylesheet" type="text/css" href="./../3rdparty/materialize/css/materialize.min.css" />
 		
 		<!-- 1st Party Stylesheets -->
@@ -13,17 +14,24 @@
 	</head>
 	<body>
 		<div class="TabSelector">
-			
+			<ul>
+				<li><a class="waves-effect waves-light btn blue darken-1">Participants (1)</a></li>
+				<li><a class="waves-effect waves-light btn blue darken-1">Leaderboard</a></li>
+				<li style="float:right;"><a class="waves-effect waves-light btn grey darken-3">Status</a></li>
+				<li style="float:right;"><a class="waves-effect waves-light btn deep-purple">Log</a></li>
+				<li style="float:right;"><a class="waves-effect waves-light btn deep-purple">Configuration</a></li>
+			</ul>
 		</div>
 		<div class="TabContainer">
-			<div class="TabContent">
-				<h2>Registered Users</h2>
+			<div class="TabContent Participants">
+				<h2>Tournament Participants</h2>
 				
 				<table>
 					<thead>
 						<tr>
-							<th></th>
+							<th><i class="material-icons">control_point_duplicate</i></th>
 							<th>Discord</th>
+							<th></th>
 							<th>Origin</th>
 							<th>Tournament Status</th>
 							<th></th>
@@ -31,15 +39,45 @@
 					</thead>
 					<tbody>
 						<tr user="488187472514252811">
-							<th>
+							<td class="UserSelect">
 								<label>
-									<input type="checkbox" class="filled-in" checked="checked" />
+									<input type="checkbox" class="filled-in" />
 									<span></span>
 								</label>
-							</th>
+							</td>
+							<td class="Avatar">
+								<img src="https://via.placeholder.com/300">
+							</td>
+							<td>
+								<ul class="DiscordInfo">
+									<li class="Username">@seed#4430</li>
+									<li class="ID">488187472514252811</li>
+									<li class="CreatedAt"><strong>Created:</strong> 2018.10.01 1:17:03 PM</li>
+									<li class="JoinedGuild"><strong>Joined:</strong> 2021.06.21 12:32:09 AM</li>
+								</ul>
+							</td>
+							<td>
+								SeeeeeeeedVEVO
+							</td>
+							<td>
+								<ul class="TournamentStatus">
+									<li class="Status">Awaiting Approval</li>
+									<li class="LeaderboardRanking"><strong>Ranking:</strong> #1</li>
+									<li class="RegisteredAt"><strong>Registered:</strong> 2021.06.21 1:03:48 AM</li>
+								</ul>
+							</td>
+							<td>
+								<ul class="UpdateUserStatus">
+									<li><a class="waves-effect waves-light btn green">Accept</a></li>
+									<li><a class="waves-effect waves-light btn red">Decline</a></li>
+								</ul>
+							</td>
 						</tr>
 					</tbody>
 				</table>
+			</div>
+			<div class="TabContent Leaderboard">
+				<h2>Leaderboard</h2>
 			</div>
 		</div>
 	</body>
